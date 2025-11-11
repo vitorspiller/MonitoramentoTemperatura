@@ -16,6 +16,10 @@
             console.log('Conectado ao servidor Flask!');
         });
 
+        socket.on('teste_evento', (data) => {
+            console.warn('>>> [TESTE] Ping recebido do servidor!', data);
+        });
+
         socket.on('nova_leitura', (data) => {
             console.log('Evento "nova_leitura" recebido!', data); 
             const li = document.createElement('li');
@@ -23,7 +27,6 @@
             document.getElementById('leituras').prepend(li);
         });
         
-
         socket.on('historico', (leituras) => {
             const lista = document.getElementById('leituras');
             lista.innerHTML = '';
@@ -36,19 +39,3 @@
     </script>
 </body>
 </html>
-
-// ... (seu script)
-
-        socket.on('connect', () => {
-            console.log('Conectado ao servidor Flask!');
-        });
-
-        // ========= ADICIONE ESTE NOVO BLOCO =========
-        socket.on('teste_evento', (data) => {
-            console.warn('>>> [TESTE] Ping recebido do servidor!', data);
-        });
-        // ============================================
-
-        socket.on('nova_leitura', (data)) => {
-            console.log('Evento "nova_leitura" recebido!', data); // Mantenha esta linha
-// ... (resto da função)}
