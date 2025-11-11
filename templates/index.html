@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Leituras de Temperatura</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Temperaturas em tempo real 🌡️</h1>
+    <ul id="leituras"></ul>
+
+    <script>
+        const socket = io();
+
+        socket.on('connect', () => {
+            console.log('Conectado ao servidor Flask!');
+        });
+
+        socket.on('nova_leitura', (data) => {
+            console.log('Evento "nova_leitura" recebido!', data); 
+            const li = document.createElement('li');
+            li.textContent = `Sensor: ${data.sensor_id} | Temp: ${data.temperature}°C | ${new Date(data.timestamp * 1000).toLocaleTimeString()}`;
+            document.getElementById('leituras').prepend(li);
+        });
+        
+
+        socket.on('historico', (leituras) => {
+            const lista = document.getElementById('leituras');
+            lista.innerHTML = '';
+            leituras.forEach((d) => {
+                const li = document.createElement('li');
+                li.textContent = `Sensor: ${d.sensor_id} | Temp: ${d.temperature}°C | ${new Date(d.timestamp * 1000).toLocaleTimeString()}`;
+                lista.prepend(li);
+            });
+        });
+    </script>
+</body>
+</html>
+
+// ... (seu script)
+
+        socket.on('connect', () => {
+            console.log('Conectado ao servidor Flask!');
+        });
+
+        // ========= ADICIONE ESTE NOVO BLOCO =========
+        socket.on('teste_evento', (data) => {
+            console.warn('>>> [TESTE] Ping recebido do servidor!', data);
+        });
+        // ============================================
+
+        socket.on('nova_leitura', (data)) => {
+            console.log('Evento "nova_leitura" recebido!', data); // Mantenha esta linha
+// ... (resto da função)}
